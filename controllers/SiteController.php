@@ -12,6 +12,12 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+    public function beforeAction($action)
+    {
+        Yii::$app->view->theme->pathMap['@app/views'] = '@app/views';
+        return parent::beforeAction($action);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -77,7 +83,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect('/admin');
         }
 
         $model->password = '';

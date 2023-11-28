@@ -11,6 +11,11 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'admin' => [
+            'class' => \app\modules\admin\Module::class,
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -42,14 +47,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@vendor/hail812/yii2-adminlte3/src/views'
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];
