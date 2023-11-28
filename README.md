@@ -1,5 +1,9 @@
+<a href="http://astgroup.kadastrcard.ru" target="_blank">http://astgroup.kadastrcard.ru</a>
+```
+login:admin
+password:admin
+```
 <h1>Тестовое задание для PHP-разработчика</h1>
-
 Используя фреймворк Yii2 (basic):
 <ul>
 <li>
