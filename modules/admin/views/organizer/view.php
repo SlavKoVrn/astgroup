@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="organizer-view">
 
     <p>
-        <?= Html::a('Update', ['Изменить', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['Удалить', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Удалить ?',
