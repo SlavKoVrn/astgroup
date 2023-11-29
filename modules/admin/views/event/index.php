@@ -43,7 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return date('d.m.Y',strtotime($model->date));
                                 }
                             ],
-                            'description:ntext',
+                            [
+                                'label'=>'Организаторы',
+                                'content'=>function($model){
+                                    return implode('<br/>',$model->getSelectedOrganizersName());
+                                }
+                            ],
                             [
                                 'class' => ActionColumn::className(),
                                 'urlCreator' => function ($action, Event $model, $key, $index, $column) {

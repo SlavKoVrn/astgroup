@@ -68,6 +68,7 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event();
+        $model->organizers = [];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -92,8 +93,12 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->organizers = $model->getSelectedOrganizersIds();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $post = $this->request->post();
+            $organizers = $post['Event']['organizers'];
+            $model->organizersSave($organizers);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -31,6 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'phone',
             [
+                'label'=>'Мероприятия',
+                'content'=>function($model){
+                    return implode('<br/>',$model->getSelectedEventsName());
+                }
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Organizer $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

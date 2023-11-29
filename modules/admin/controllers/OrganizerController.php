@@ -68,6 +68,7 @@ class OrganizerController extends Controller
     public function actionCreate()
     {
         $model = new Organizer();
+        $model->events = [];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -92,8 +93,12 @@ class OrganizerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->events = $model->getSelectedEventsIds();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $post = $this->request->post();
+            $events = $post['Organizer']['events'];
+            $model->eventsSave($events);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
