@@ -3,8 +3,72 @@
 /** @var yii\web\View $this */
 
 $this->title = 'My Yii Application';
-?>
+
+use app\models\Event;
+use kartik\grid\GridView;
+use yii\grid\ActionColumn;
+use yii\helpers\Url;
+use yii\widgets\Pjax; ?>
 <div class="site-index">
+
+    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
+        <h1 class="display-4">Отображение мероприятий и их организаторов</h1>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col col-sm-12">
+                <?php Pjax::begin(['timeout'=>0]); ?>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        [
+                            'attribute'=>'id',
+                            'sortLinkOptions' => [
+                                'class' => ($searchModel->order == 'id')?'fa fa-sort-down':(($searchModel->order == '-id')?'fa fa-sort-up':'fa fa-sort'),
+                            ],
+                        ],
+                        [
+                            'attribute'=>'name',
+                            'sortLinkOptions' => [
+                                'class' => ($searchModel->order == 'name')?'fa fa-sort-down':(($searchModel->order == '-name')?'fa fa-sort-up':'fa fa-sort'),
+                            ],
+                        ],
+                        [
+                            'filterType' => GridView::FILTER_DATE_RANGE,
+                            'filterWidgetOptions' =>([
+                                'model'=>$searchModel,
+                                'attribute'=>'date',
+                                'presetDropdown'=>TRUE,
+                                'convertFormat'=>true,
+                                'pluginOptions'=>[
+                                    'format'=>'d.m.Y',
+                                    'opens'=>'left'
+                                ]
+                            ]),
+                            'sortLinkOptions' => [
+                                'class' => ($searchModel->order == 'date')?'fa fa-sort-down':(($searchModel->order == '-date')?'fa fa-sort-up':'fa fa-sort'),
+                            ],
+                            'attribute'=>'date',
+                            'content'=>function($model){
+                                return date('d.m.Y',strtotime($model->date));
+                            }
+                        ],
+                        [
+                            'label'=>'Организаторы',
+                            'content'=>function($model){
+                                return implode('<br/>',$model->getSelectedOrganizersName());
+                            }
+                        ],
+                    ],
+                ]); ?>
+
+                <?php Pjax::end(); ?>
+
+            </div>
+        </div>
+    </div>
 
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
         <h1 class="display-4">Congratulations!</h1>

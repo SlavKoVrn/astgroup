@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\EventSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -71,7 +72,13 @@ class SiteController extends Controller
             return $this->redirect('/admin');
         }
 
-        return $this->render('index');
+        $searchModel = new EventSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
