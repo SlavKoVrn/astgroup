@@ -19,7 +19,7 @@ use kartik\date\DatePicker;
         [
             'options' => ['placeholder' => 'дата мероприятия'],
             'pluginOptions' => [
-                'format' => 'dd.mm.yyyy',
+                'format' => 'yyyy-mm-dd',
                 'autoclose'      => true,
                 'todayHighlight' => true
             ]
