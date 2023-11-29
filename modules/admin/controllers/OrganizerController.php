@@ -2,8 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Event2organizer;
 use app\models\Organizer;
 use app\models\OrganizerSearch;
+
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -116,8 +119,17 @@ class OrganizerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            Event2organizer::deleteAll([
+                'organizer_id'=>$model->id,
+            ]);
+            $model->delete();
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
         return $this->redirect(['index']);
     }
 

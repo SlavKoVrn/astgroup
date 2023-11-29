@@ -3,7 +3,10 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Event;
+use app\models\Event2organizer;
 use app\models\EventSearch;
+
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -116,8 +119,17 @@ class EventController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            Event2organizer::deleteAll([
+                'event_id'=>$model->id,
+            ]);
+            $model->delete();
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
         return $this->redirect(['index']);
     }
 
