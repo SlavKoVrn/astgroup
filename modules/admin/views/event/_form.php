@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
+use yii\web\JsExpression;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var app\models\Event $model */
@@ -33,7 +35,7 @@ use kartik\select2\Select2;
     <?php /* $form->field($model, 'organizers')->dropDownList(Organizer::getAllArray(), [
         'multiple' => true,
     ]) */ ?>
-    <?= $form->field($model, 'organizers')->widget(Select2::class,[
+    <?php /* $form->field($model, 'organizers')->widget(Select2::class,[
         'data' => Organizer::getAllArray(),
         'language' => 'ru',
         'options' => ['placeholder' => 'организаторы'],
@@ -41,7 +43,32 @@ use kartik\select2\Select2;
             'allowClear' => true,
             'multiple' => true,
         ],
-    ]);?>
+    ]);*/?>
+
+    <?= $form->field($model, 'organizers')->widget(Select2::class, [
+        'data' => $model->getSelectedOrganizersName(),
+        'options' => [
+            'placeholder' => 'организаторы',
+            'multiple' => true,
+         ],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 1,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Подождите...'; }"),
+            ],
+            'ajax' => [
+                'url' => Url::to(['/admin/event/organizers']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) {return {q:params.term}; }'),
+                'delay' => 250,
+                'cache' => true,
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(data) {return data.text; }'),
+            'templateSelection' => new JsExpression('function (data) {  return data.text; }'),
+        ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

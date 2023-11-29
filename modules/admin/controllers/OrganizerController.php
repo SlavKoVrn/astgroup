@@ -7,9 +7,11 @@ use app\models\Organizer;
 use app\models\OrganizerSearch;
 
 use Yii;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * OrganizerController implements the CRUD actions for Organizer model.
@@ -32,6 +34,25 @@ class OrganizerController extends Controller
                 ],
             ]
         );
+    }
+
+    public function actionEvents() {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $q = Yii::$app->request->get('q');
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = (new Query)
+                ->select('id AS id, CONCAT_WS(" ",`date` ,`name`) AS text')
+                ->from('events')
+                ->where(['like', 'date', $q])
+                ->orWhere(['like', 'name', $q]);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        return $out;
     }
 
     /**

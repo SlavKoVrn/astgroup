@@ -10,6 +10,8 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\db\Query;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -32,6 +34,26 @@ class EventController extends Controller
                 ],
             ]
         );
+    }
+
+    public function actionOrganizers() {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $q = Yii::$app->request->get('q');
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = (new Query)
+                ->select('id AS id, CONCAT_WS(" ",`fio` ,`email`,`phone`) AS text')
+                ->from('organizers')
+                ->where(['like', 'fio', $q])
+                ->orWhere(['like', 'email', $q])
+                ->orWhere(['like', 'phone', $q]);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        return $out;
     }
 
     /**
