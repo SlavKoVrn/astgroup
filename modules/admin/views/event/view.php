@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label'=>'Дата проведения',
                 'value'=>function($model){
-                    return date('d.m.Y H:i',strtotime($model->date));
+                    return date('d.m.Y',strtotime($model->date));
                 }
             ],
             'description:ntext',

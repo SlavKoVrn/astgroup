@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]),
                                 'attribute'=>'date',
                                 'content'=>function($model){
-                                    return date('d.m.Y H:i',strtotime($model->date));
+                                    return date('d.m.Y',strtotime($model->date));
                                 }
                             ],
                             'description:ntext',
