@@ -33,6 +33,8 @@ class Organizer extends \yii\db\ActiveRecord
         return [
             [['fio', 'email', 'phone'], 'string', 'max' => 255],
             ['fio', 'required'],
+            ['email', 'required'],
+            ['email', 'email'],
             ['events', 'each', 'rule' => ['integer']],
         ];
     }
