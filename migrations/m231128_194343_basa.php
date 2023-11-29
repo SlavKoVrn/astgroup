@@ -20,7 +20,7 @@ class m231128_194343_basa extends Migration
         $this->createTable('{{%events}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
-            'date' => $this->dateTime(),
+            'date' => $this->date(),
             'description' => $this->text(),
         ], $tableOptions);
 

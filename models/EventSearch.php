@@ -58,8 +58,8 @@ class EventSearch extends Event
 
         if ($this->date){
             [$from,$to] = explode(' - ',$this->date);
-            $from = date('Y-m-d 00:00:00',strtotime($from));
-            $to = date('Y-m-d 23:59:59',strtotime($to));
+            $from = date('Y-m-d',strtotime($from));
+            $to = date('Y-m-d',strtotime($to));
             $query->andFilterWhere(['between', 'date', $from, $to]);
         }
 

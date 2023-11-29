@@ -30,7 +30,7 @@ class Event extends \yii\db\ActiveRecord
         return [
             [['date'], 'safe'],
             [['date'], 'filter', 'filter' => function ($value) {
-                return date('Y-m-d H:i:s',strtotime($value));
+                return date('Y-m-d',strtotime($value));
             }],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 255],
