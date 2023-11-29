@@ -24,8 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            'id',
-                            'name',
+                            [
+                                'attribute'=>'id',
+                                'sortLinkOptions' => [
+                                    'class' => ($searchModel->order == 'id')?'fa fa-sort-down':(($searchModel->order == '-id')?'fa fa-sort-up':'fa fa-sort'),
+                                ],
+                            ],
+                            [
+                                'attribute'=>'name',
+                                'sortLinkOptions' => [
+                                    'class' => ($searchModel->order == 'name')?'fa fa-sort-down':(($searchModel->order == '-name')?'fa fa-sort-up':'fa fa-sort'),
+                                ],
+                            ],
                             [
                                 'filterType' => GridView::FILTER_DATE_RANGE,
                                 'filterWidgetOptions' =>([
@@ -38,6 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'opens'=>'left'
                                     ]
                                 ]),
+                                'sortLinkOptions' => [
+                                    'class' => ($searchModel->order == 'date')?'fa fa-sort-down':(($searchModel->order == '-date')?'fa fa-sort-up':'fa fa-sort'),
+                                ],
                                 'attribute'=>'date',
                                 'content'=>function($model){
                                     return date('d.m.Y',strtotime($model->date));

@@ -4,7 +4,7 @@ use app\models\Organizer;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var app\models\OrganizerSearch $searchModel */
@@ -24,10 +24,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
-            'fio',
-            'email:email',
-            'phone',
+            [
+                'attribute'=>'id',
+                'sortLinkOptions' => [
+                    'class' => ($searchModel->order == 'id')?'fa fa-sort-down':(($searchModel->order == '-id')?'fa fa-sort-up':'fa fa-sort'),
+                ],
+            ],
+            [
+                'attribute'=>'fio',
+                'sortLinkOptions' => [
+                    'class' => ($searchModel->order == 'fio')?'fa fa-sort-down':(($searchModel->order == '-fio')?'fa fa-sort-up':'fa fa-sort'),
+                ],
+            ],
+            [
+                'attribute'=>'email',
+                'sortLinkOptions' => [
+                    'class' => ($searchModel->order == 'email')?'fa fa-sort-down':(($searchModel->order == '-email')?'fa fa-sort-up':'fa fa-sort'),
+                ],
+            ],
+            [
+                'attribute'=>'phone',
+                'sortLinkOptions' => [
+                    'class' => ($searchModel->order == 'phone')?'fa fa-sort-down':(($searchModel->order == '-phone')?'fa fa-sort-up':'fa fa-sort'),
+                ],
+            ],
             [
                 'label'=>'Мероприятия',
                 'content'=>function($model){

@@ -11,6 +11,8 @@ use app\models\Organizer;
  */
 class OrganizerSearch extends Organizer
 {
+    public $order;
+
     /**
      * {@inheritdoc}
      */
@@ -49,6 +51,10 @@ class OrganizerSearch extends Organizer
         ]);
 
         $this->load($params);
+
+        if (isset($params['sort'])){
+            $this->order = $params['sort'];
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
