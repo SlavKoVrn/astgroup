@@ -29,7 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'date',
+            [
+                'label'=>'Дата проведения',
+                'value'=>function($model){
+                    return date('d.m.Y H:i',strtotime($model->date));
+                }
+            ],
             'description:ntext',
         ],
     ]) ?>

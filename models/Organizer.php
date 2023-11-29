@@ -29,6 +29,7 @@ class Organizer extends \yii\db\ActiveRecord
     {
         return [
             [['fio', 'email', 'phone'], 'string', 'max' => 255],
+            ['fio', 'required'],
         ];
     }
 

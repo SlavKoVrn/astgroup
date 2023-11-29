@@ -28,9 +28,13 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date'], 'date', 'format' => 'php:Y-m-d'],
+            [['date'], 'safe'],
+            [['date'], 'filter', 'filter' => function ($value) {
+                return date('Y-m-d H:i:s',strtotime($value));
+            }],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 255],
+            ['name', 'required'],
         ];
     }
 

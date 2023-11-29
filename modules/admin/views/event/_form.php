@@ -2,19 +2,30 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\datetime\DateTimePicker;
 
 /** @var yii\web\View $this */
 /** @var app\models\Event $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="event-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->widget(
+        DateTimePicker::class,
+        [
+            'options' => ['placeholder' => 'дата мероприятия'],
+            'convertFormat' => true,
+            'pluginOptions' => [
+                'autoclose'      => true,
+                'format'         => 'dd.mm.yyyy HH:ii:ss',
+                'todayHighlight' => true
+            ]
+        ]
+    ); ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

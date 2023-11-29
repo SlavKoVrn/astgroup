@@ -4,7 +4,7 @@ use app\models\Event;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var app\models\EventSearch $searchModel */
@@ -26,7 +26,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             'id',
                             'name',
-                            'date',
+                            [
+                                'filterType' => GridView::FILTER_DATE_RANGE,
+                                'filterWidgetOptions' =>([
+                                    'model'=>$searchModel,
+                                    'attribute'=>'date',
+                                    'presetDropdown'=>TRUE,
+                                    'convertFormat'=>true,
+                                    'pluginOptions'=>[
+                                        'format'=>'d.m.Y',
+                                        'opens'=>'left'
+                                    ]
+                                ]),
+                                'attribute'=>'date',
+                                'content'=>function($model){
+                                    return date('d.m.Y H:i',strtotime($model->date));
+                                }
+                            ],
                             'description:ntext',
                             [
                                 'class' => ActionColumn::className(),
