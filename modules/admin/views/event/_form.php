@@ -1,8 +1,10 @@
 <?php
 use app\models\Organizer;
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 
 /** @var yii\web\View $this */
 /** @var app\models\Event $model */
@@ -28,9 +30,18 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'organizers')->dropDownList(Organizer::getAllArray(), [
+    <?php /* $form->field($model, 'organizers')->dropDownList(Organizer::getAllArray(), [
         'multiple' => true,
-    ]) ?>
+    ]) */ ?>
+    <?= $form->field($model, 'organizers')->widget(Select2::class,[
+        'data' => Organizer::getAllArray(),
+        'language' => 'ru',
+        'options' => ['placeholder' => 'организаторы'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'multiple' => true,
+        ],
+    ]);?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

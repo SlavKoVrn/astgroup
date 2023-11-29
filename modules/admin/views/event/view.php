@@ -36,6 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'description:ntext',
+            [
+                'format'=>'raw',
+                'label'=>'Организаторы',
+                'value'=>function($model){
+                    return implode('<br/>',$model->getSelectedOrganizersName());
+                }
+            ],
         ],
     ]) ?>
 

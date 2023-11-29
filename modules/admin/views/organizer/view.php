@@ -31,6 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'fio',
             'email:email',
             'phone',
+            [
+                'format'=>'raw',
+                'label'=>'Мероприятия',
+                'value'=>function($model){
+                    return implode('<br/>',$model->getSelectedEventsName());
+                }
+            ],
         ],
     ]) ?>
 
