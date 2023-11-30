@@ -106,7 +106,7 @@ class Event extends \yii\db\ActiveRecord
 
     public function getEventName()
     {
-        return date('d.m.Y',strtotime($this->date)).' '.$this->name;
+        return $this->id.'. '.date('d.m.Y',strtotime($this->date)).' '.$this->name;
     }
 
     public static function getAllArray()

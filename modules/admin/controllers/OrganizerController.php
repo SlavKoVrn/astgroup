@@ -44,7 +44,7 @@ class OrganizerController extends Controller
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = (new Query)
-                ->select('id AS id, CONCAT_WS(" ",`date` ,`name`) AS text')
+                ->select('id AS id, CONCAT_WS(" ",`id`,`date` ,`name`) AS text')
                 ->from('events')
                 ->where(['like', 'date', $q])
                 ->orWhere(['like', 'name', $q]);

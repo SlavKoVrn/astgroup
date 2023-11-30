@@ -44,7 +44,7 @@ class EventController extends Controller
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = (new Query)
-                ->select('id AS id, CONCAT_WS(" ",`fio` ,`email`,`phone`) AS text')
+                ->select('id AS id, CONCAT_WS(" ",`id`,`fio` ,`email`,`phone`) AS text')
                 ->from('organizers')
                 ->where(['like', 'fio', $q])
                 ->orWhere(['like', 'email', $q])

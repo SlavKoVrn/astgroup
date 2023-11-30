@@ -61,7 +61,7 @@ class Organizer extends \yii\db\ActiveRecord
 
     public function getName()
     {
-        return $this->fio.' '.$this->email.' '.$this->phone;
+        return $this->id.'. '.$this->fio.' '.$this->email.' '.$this->phone;
     }
 
     public static function getAllArray()
