@@ -62,6 +62,10 @@ class m231128_194343_basa extends Migration
             'organizer_id'
         );
 
+        $this->addForeignKey('fk-event2organizer-event_id', '{{%event2organizer}}', 'event_id', 'events', 'id', 'CASCADE', 'RESTRICT');
+
+        $this->addForeignKey('fk-event2organizer-organizer_id', '{{%event2organizer}}', 'organizer_id', 'organizers', 'id', 'CASCADE', 'RESTRICT');
+
         $this->batchInsert('{{%event2organizer}}', ['event_id','organizer_id'], [
             [1,1],
             [1,2],
@@ -81,6 +85,9 @@ class m231128_194343_basa extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fk-event2organizer-event_id', '{{%event2organizer}}');
+        $this->dropForeignKey('fk-event2organizer-organizer_id', '{{%event2organizer}}');
+
         $this->dropIndex('{{%idx-event2organizer-event_id}}','{{%event2organizer}}');
         $this->dropIndex('{{%idx-event2organizer-organizer_id}}','{{%event2organizer}}');
 
