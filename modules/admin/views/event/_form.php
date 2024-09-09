@@ -3,7 +3,7 @@ use app\models\Organizer;
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\date\DatePicker;
+use yii\jui\DatePicker;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use yii\helpers\Url;
@@ -18,17 +18,13 @@ use yii\helpers\Url;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date')->widget(
-        DatePicker::class,
-        [
-            'options' => ['placeholder' => 'дата мероприятия'],
-            'pluginOptions' => [
-                'format' => 'yyyy-mm-dd',
-                'autoclose'      => true,
-                'todayHighlight' => true
-            ]
-        ]
-    ); ?>
+    <?= $form->field($model, 'date')->widget(DatePicker::class,([
+        'language' => 'ru',
+        'model' => $model,
+        'attribute' => 'date',
+        'options' => ['class' => 'form-control'],
+        'dateFormat' => 'dd.MM.yyyy',
+    ])); ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
